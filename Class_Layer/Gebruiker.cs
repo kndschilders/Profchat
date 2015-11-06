@@ -9,6 +9,9 @@ namespace Class_Layer
 {
     public class Gebruiker
     {
+        /// <summary>
+        /// The ID is used as a reference for the database
+        /// </summary>
         public int ID { get; private set; }
         public string Naam { get; private set; }
         public int IsOnline { get; private set; }
