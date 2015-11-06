@@ -15,3 +15,6 @@ C:\Users\Gebruiker\Desktop\MAIN FOLDER\SCHOOL\S2 Her\Proftaak\Proftaak_Chat_DB\P
 C:\Users\Gebruiker\Desktop\MAIN FOLDER\SCHOOL\S2 Her\Proftaak\Proftaak_Chat_DB\Proftaak_Chat_DB\bin\Debug\Oracle.DataAccess.dll
 C:\Users\Gebruiker\Desktop\MAIN FOLDER\SCHOOL\S2 Her\Proftaak\Proftaak_Chat_DB\Proftaak_Chat_DB\bin\Debug\Database_Layer.pdb
 C:\Users\Gebruiker\Desktop\MAIN FOLDER\SCHOOL\S2 Her\Proftaak\Proftaak_Chat_DB\Proftaak_Chat_DB\obj\Debug\Proftaak_Chat_DB.Chat.resources
+D:\Users\Lukas\Dropbox\School\Fontys\Semester 2\Poging 2\Proftaak\Profchat\Proftaak_Chat_DB\bin\Debug\Proftaak_Chat_DB.exe.config
+D:\Users\Lukas\Dropbox\School\Fontys\Semester 2\Poging 2\Proftaak\Profchat\Proftaak_Chat_DB\obj\Debug\Proftaak_Chat_DB.exe
+D:\Users\Lukas\Dropbox\School\Fontys\Semester 2\Poging 2\Proftaak\Profchat\Proftaak_Chat_DB\obj\Debug\Proftaak_Chat_DB.pdb
