@@ -27,6 +27,7 @@ namespace Class_Layer
                 // else
                     // get chatroomID from database
 
+
             // Get ChatroomID from database
             Database.ExecuteQuery("SELECT CHATROOMID FROM USER_CHATROOM WHERE USERID = 10001");
         }
