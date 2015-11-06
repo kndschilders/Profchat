@@ -1,0 +1,6 @@
+C:\Users\Gebruiker\Desktop\MAIN FOLDER\SCHOOL\S2 Her\Proftaak\Proftaak_Chat_DB\Database_Layer\bin\Debug\Database_Layer.dll
+C:\Users\Gebruiker\Desktop\MAIN FOLDER\SCHOOL\S2 Her\Proftaak\Proftaak_Chat_DB\Database_Layer\bin\Debug\Database_Layer.pdb
+C:\Users\Gebruiker\Desktop\MAIN FOLDER\SCHOOL\S2 Her\Proftaak\Proftaak_Chat_DB\Database_Layer\bin\Debug\Oracle.DataAccess.dll
+C:\Users\Gebruiker\Desktop\MAIN FOLDER\SCHOOL\S2 Her\Proftaak\Proftaak_Chat_DB\Database_Layer\obj\Debug\Database_Layer.csprojResolveAssemblyReference.cache
+C:\Users\Gebruiker\Desktop\MAIN FOLDER\SCHOOL\S2 Her\Proftaak\Proftaak_Chat_DB\Database_Layer\obj\Debug\Database_Layer.dll
+C:\Users\Gebruiker\Desktop\MAIN FOLDER\SCHOOL\S2 Her\Proftaak\Proftaak_Chat_DB\Database_Layer\obj\Debug\Database_Layer.pdb
