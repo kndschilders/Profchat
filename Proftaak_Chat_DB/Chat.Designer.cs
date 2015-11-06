@@ -80,6 +80,7 @@
             this.btnSend.TabIndex = 3;
             this.btnSend.Text = "Stuur bericht";
             this.btnSend.UseVisualStyleBackColor = true;
+            this.btnSend.Click += new System.EventHandler(this.btnSend_Click);
             // 
             // Chat
             // 
@@ -95,6 +96,7 @@
             this.MaximizeBox = false;
             this.Name = "Chat";
             this.Text = "Chat";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Chat_FormClosing);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Chat_FormClosed);
             this.ResumeLayout(false);
             this.PerformLayout();

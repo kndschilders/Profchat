@@ -26,10 +26,18 @@ namespace Class_Layer
                     // get chatroomID from database
                 // else
                     // get chatroomID from database
-
+            
+            
 
             // Get ChatroomID from database
             Database.ExecuteQuery("SELECT CHATROOMID FROM USER_CHATROOM WHERE USERID = 10001");
+        }
+
+        public bool SendMessage(string message, int ownerID)
+        {
+            string query = "INSERT INTO MESSAGES VALUE (MESSAGES_SEQ.NEXTVAL, " + ownerID + ", " + ChatroomID + ", " + message + ", CURRENT_TIMESTAMP)";
+            Database.ExecuteQuery(query);
+            return false;
         }
     }
 }

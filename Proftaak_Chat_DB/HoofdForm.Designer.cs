@@ -28,9 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.lbContacts = new System.Windows.Forms.ListBox();
             this.label1 = new System.Windows.Forms.Label();
             this.btnStartChat = new System.Windows.Forms.Button();
+            this.chatCheckTimer = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // lbContacts
@@ -62,6 +64,12 @@
             this.btnStartChat.UseVisualStyleBackColor = true;
             this.btnStartChat.Click += new System.EventHandler(this.btnStartChat_Click);
             // 
+            // chatCheckTimer
+            // 
+            this.chatCheckTimer.Enabled = true;
+            this.chatCheckTimer.Interval = 2000;
+            this.chatCheckTimer.Tick += new System.EventHandler(this.chatCheckTimer_Tick);
+            // 
             // HoofdForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -85,6 +93,7 @@
         private System.Windows.Forms.ListBox lbContacts;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnStartChat;
+        private System.Windows.Forms.Timer chatCheckTimer;
     }
 }
 
