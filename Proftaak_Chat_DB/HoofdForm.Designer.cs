@@ -74,6 +74,7 @@
             this.MaximizeBox = false;
             this.Name = "HoofdForm";
             this.Text = "HoofdForm";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.HoofdForm_FormClosing);
             this.ResumeLayout(false);
             this.PerformLayout();
 

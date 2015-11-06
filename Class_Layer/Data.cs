@@ -30,5 +30,29 @@ namespace Class_Layer
 
             return returned;
         }
+
+        public bool UpdateOnlineStatus(bool newStatus, int gebrID)
+        {
+            bool gelukt = false;
+            string query = string.Empty;
+
+            if (newStatus)
+                query = "UPDATE \"USER\" SET ISONLINE = 1 WHERE ID = " + gebrID;
+            else
+                query = "UPDATE \"USER\" SET ISONLINE = 0 WHERE ID = " + gebrID;
+            
+            try
+            {
+                Database.UpdateQuery(query);
+
+                gelukt = true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            return gelukt;
+        }
     }
 }

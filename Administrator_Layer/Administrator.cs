@@ -16,11 +16,28 @@ namespace Administrator_Layer
         {
             Vrijwilligers = new List<Object>();
 
+            this.UpdateGebruikers();
+        }
+
+        public void UpdateGebruikers()
+        {
             List<Gebruiker> list = data.HaalGebruikersOp();
+
+            this.Vrijwilligers.Clear();
 
             if (list != null)
                 foreach (Gebruiker g in list)
                     Vrijwilligers.Add(g);
+        }
+
+        public bool SetOnline(int gebrID)
+        {
+            return this.data.UpdateOnlineStatus(true, gebrID);
+        }
+
+        public bool SetOffline(int gebrID)
+        {
+            return this.data.UpdateOnlineStatus(false, gebrID);
         }
     }
 }

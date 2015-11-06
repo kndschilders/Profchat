@@ -15,10 +15,14 @@ namespace Proftaak_Chat_DB
     public partial class HoofdForm : Form
     {
         Administrator admin;
+        Form p;
+        int gebrID;
         
-        public HoofdForm()
+        public HoofdForm(Form previous)
         {
             InitializeComponent();
+
+            this.p = previous;
 
             admin = new Administrator();
             lbContacts.DrawMode = DrawMode.OwnerDrawFixed;
@@ -36,6 +40,35 @@ namespace Proftaak_Chat_DB
                     else
                         this.lbContacts.ForeColor = Color.Red;
                     this.lbContacts.Items.Add(obj);
+            }
+
+            // Set selectedindex of lbContacts
+            this.lbContacts.SelectedIndex = 0;
+        }
+
+        public HoofdForm(Form previous, int gebruikerID)
+        {
+            InitializeComponent();
+
+            this.p = previous;
+            this.gebrID = gebruikerID;
+
+            admin = new Administrator();
+            lbContacts.DrawMode = DrawMode.OwnerDrawFixed;
+            lbContacts.DrawItem += new DrawItemEventHandler(listBox_DrawItem);
+
+            // Fill lbContacts
+            this.lbContacts.Items.Clear();
+            List<Object> newList = this.admin.Vrijwilligers.OrderBy(i => i.GetType().GetProperty("IsOnline").GetValue(i, null)).Reverse().ToList<Object>();
+            foreach (Object obj in newList)//this.admin.Vrijwilligers)
+            {
+                Type objType = obj.GetType();
+                if (objType.GetProperty("IsOnline") != null)
+                    if (Convert.ToInt32(objType.GetProperty("IsOnline").GetValue(obj, null)) == 1)
+                        this.lbContacts.ForeColor = Color.Blue;
+                    else
+                        this.lbContacts.ForeColor = Color.Red;
+                this.lbContacts.Items.Add(obj);
             }
 
             // Set selectedindex of lbContacts
@@ -121,6 +154,12 @@ namespace Proftaak_Chat_DB
             // around the selected item.
             //
             e.DrawFocusRectangle();
+        }
+
+        private void HoofdForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            this.admin.SetOffline(gebrID);
+            this.p.Close();
         }
     }
 }

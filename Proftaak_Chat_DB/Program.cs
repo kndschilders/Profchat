@@ -16,7 +16,7 @@ namespace Proftaak_Chat_DB
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new HoofdForm());
+            Application.Run(new Inloggen());
         }
     }
 }

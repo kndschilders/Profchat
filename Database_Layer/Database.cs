@@ -84,11 +84,30 @@ namespace Database_Layer
                 {
                     cmd.ExecuteNonQuery();
                 }
-                catch (OracleException)
+                catch (OracleException ex)
                 {
-                    throw;
+                    Console.WriteLine(ex.Message);
                 }
                 c.Close();
+            }
+        }
+
+        public static void UpdateQuery(string query)
+        {
+            try
+            {
+                using (OracleConnection conn = new OracleConnection(connectionstring))
+                {
+                    conn.Open();
+                    OracleCommand cmd = conn.CreateCommand();
+                    cmd.CommandType = CommandType.Text;
+                    cmd.CommandText = query;
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
             }
         }
     }

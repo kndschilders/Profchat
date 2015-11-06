@@ -4,3 +4,9 @@ C:\Users\Gebruiker\Desktop\MAIN FOLDER\SCHOOL\S2 Her\Proftaak\Proftaak_Chat_DB\D
 C:\Users\Gebruiker\Desktop\MAIN FOLDER\SCHOOL\S2 Her\Proftaak\Proftaak_Chat_DB\Database_Layer\obj\Debug\Database_Layer.csprojResolveAssemblyReference.cache
 C:\Users\Gebruiker\Desktop\MAIN FOLDER\SCHOOL\S2 Her\Proftaak\Proftaak_Chat_DB\Database_Layer\obj\Debug\Database_Layer.dll
 C:\Users\Gebruiker\Desktop\MAIN FOLDER\SCHOOL\S2 Her\Proftaak\Proftaak_Chat_DB\Database_Layer\obj\Debug\Database_Layer.pdb
+C:\Users\Koen\Source\Repos\Profchat\Database_Layer\bin\Debug\Database_Layer.dll
+C:\Users\Koen\Source\Repos\Profchat\Database_Layer\bin\Debug\Database_Layer.pdb
+C:\Users\Koen\Source\Repos\Profchat\Database_Layer\bin\Debug\Oracle.DataAccess.dll
+C:\Users\Koen\Source\Repos\Profchat\Database_Layer\obj\Debug\Database_Layer.csprojResolveAssemblyReference.cache
+C:\Users\Koen\Source\Repos\Profchat\Database_Layer\obj\Debug\Database_Layer.dll
+C:\Users\Koen\Source\Repos\Profchat\Database_Layer\obj\Debug\Database_Layer.pdb
