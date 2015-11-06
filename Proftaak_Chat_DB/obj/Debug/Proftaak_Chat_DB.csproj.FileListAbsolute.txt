@@ -18,3 +18,6 @@ C:\Users\Gebruiker\Desktop\MAIN FOLDER\SCHOOL\S2 Her\Proftaak\Proftaak_Chat_DB\P
 D:\Users\Lukas\Dropbox\School\Fontys\Semester 2\Poging 2\Proftaak\Profchat\Proftaak_Chat_DB\bin\Debug\Proftaak_Chat_DB.exe.config
 D:\Users\Lukas\Dropbox\School\Fontys\Semester 2\Poging 2\Proftaak\Profchat\Proftaak_Chat_DB\obj\Debug\Proftaak_Chat_DB.exe
 D:\Users\Lukas\Dropbox\School\Fontys\Semester 2\Poging 2\Proftaak\Profchat\Proftaak_Chat_DB\obj\Debug\Proftaak_Chat_DB.pdb
+C:\Users\Gebruiker\Source\Repos\Profchat\Proftaak_Chat_DB\bin\Debug\Proftaak_Chat_DB.exe.config
+C:\Users\Gebruiker\Source\Repos\Profchat\Proftaak_Chat_DB\obj\Debug\Proftaak_Chat_DB.exe
+C:\Users\Gebruiker\Source\Repos\Profchat\Proftaak_Chat_DB\obj\Debug\Proftaak_Chat_DB.pdb
