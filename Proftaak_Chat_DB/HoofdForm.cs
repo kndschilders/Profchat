@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Administrator_Layer;
 using System.Reflection;
+using System.Collections.ObjectModel;
 
 namespace Proftaak_Chat_DB
 {
@@ -47,7 +48,7 @@ namespace Proftaak_Chat_DB
             this.lbContacts.SelectedIndex = 0;
 
             // get gebruiker
-            //this.gebruiker = this.admin.HaalGebruikerOp(gebrID);
+            this.gebruiker = this.admin.HaalGebruikerOp(gebrID);
         }
 
         public HoofdForm(Form previous, int gebruikerID)
@@ -77,6 +78,9 @@ namespace Proftaak_Chat_DB
 
             // Set selectedindex of lbContacts
             this.lbContacts.SelectedIndex = 0;
+
+            // get gebruiker
+            this.gebruiker = this.admin.HaalGebruikerOp(gebrID);
         }
 
         private void btnStartChat_Click(object sender, EventArgs e)
@@ -103,17 +107,20 @@ namespace Proftaak_Chat_DB
 
                 // create new chatroom with person, store chatroomID
                 int roomID;
-                this.admin.CreateRoom(out roomID);
 
-
+                
                 if (Convert.ToInt32(objType.GetProperty("IsOnline").GetValue(selectedObj, null)) == 1 && !Convert.ToBoolean(objType.GetProperty("IsChatting").GetValue(selectedObj, null)))
                 {
-                    Form form = new Chat(this, selectedObj, roomID);
-                    form.Show();
+                    this.admin.CreateRoom(out roomID);
+
+                    //Form form = new Chat(this, selectedObj, roomID);
+                    //form.Show();
                     // Set IsChatting to true
                     objType.GetProperty("IsChatting").SetValue(selectedObj, true, null);
-                    List<int> roomsList = (List<int>)(objType.GetProperty("currentRooms").GetValue(this.gebruiker, null));
-                    roomsList.Add(roomID);
+                    //List<int> roomsList = (List<int>)(objType.GetProperty("currentRooms").GetValue(this.gebruiker, null));
+                    //ReadOnlyCollection<int> roomsList = (ReadOnlyCollection<int>)(objType.GetMethod("GetCurrentRooms").Invoke(this.gebruiker, null));
+                    //roomsList.Add(roomID);
+                    //(ReadOnlyCollection<int>)(objType.GetMethod("SetCurrentRooms").Invoke(this.gebruiker, null));
                     this.lbContacts.Invalidate();
 
                     // add both users to user_chatroom
@@ -233,23 +240,25 @@ namespace Proftaak_Chat_DB
 
         private void CheckForNewChats()
         {
-            this.gebruiker = this.admin.HaalGebruikerOp(gebrID);
 
-            if (gebruiker != null) {
+            if (gebruiker != null)
+            {
                 List<int> rooms = this.admin.GetUserChatrooms(gebrID);
 
                 // if user is currently in rooms
                 if (rooms != null)
                 {
+                    // check if gebruiker.currentrooms contains a room in rooms
+                    Type objType = this.gebruiker.GetType();
+                    ReadOnlyCollection<int> roomsList = (ReadOnlyCollection<int>)objType.GetMethod("GetCurrentRooms").Invoke(this.gebruiker, null);
                     foreach (int room in rooms)
                     {
-                        // check if gebruiker.currentrooms contains a room in rooms
-                        Type objType = this.gebruiker.GetType();
-                        List<int> roomsList = (List<int>)(objType.GetProperty("currentRooms").GetValue(this.gebruiker, null));
 
                         if (!roomsList.Contains(room))
                         {
-                            Form form = new Chat(this, lbContacts.SelectedItem, room);
+                            //roomsList.Add(room);
+                            objType.GetMethod("AddRoom").Invoke(this.gebruiker, new Object[]{room});
+                            Form form = new Chat(this, this.gebruiker, room);
                             form.Show();
                         }
                     }

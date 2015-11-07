@@ -89,7 +89,7 @@ namespace Class_Layer
 
         public DataTable ReturnMessages(int chatroomID)
         {
-            string query = "SELECT USERID, MESSAGEBODY, SENDDATE FROM MESSAGES WHERE CHATROOMID = " + chatroomID;
+            string query = "SELECT USERID, MESSAGEBODY, SENDDATE FROM MESSAGES WHERE CHATROOMID = " + chatroomID + " ORDER BY ID";
 
             return Database.RetrieveQuery(query);
         }
@@ -149,6 +149,20 @@ namespace Class_Layer
         public void AddUserToChatroom(int userID, int roomID)
         {
             string query = "INSERT INTO USER_CHATROOM VALUES(" + userID + ", " + roomID + ")";
+
+            Database.ExecuteQuery(query);
+        }
+
+        public DataTable GetUsersFromChatroom(int roomID)
+        {
+            string query = "SELECT USERID FROM USER_CHATROOM WHERE CHATROOMID = " + roomID;
+
+            return Database.RetrieveQuery(query);
+        }
+
+        public void DeleteUserFromRoom(int UserID, int roomID)
+        {
+            string query = "DELETE FROM USER_CHATROOM WHERE USERID = " + UserID + " AND CHATROOMID = " + roomID;
 
             Database.ExecuteQuery(query);
         }

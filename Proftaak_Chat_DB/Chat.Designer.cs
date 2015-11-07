@@ -28,11 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.label1 = new System.Windows.Forms.Label();
             this.lblPersoon2 = new System.Windows.Forms.Label();
             this.tbBerichten = new System.Windows.Forms.TextBox();
             this.tbMessage = new System.Windows.Forms.TextBox();
             this.btnSend = new System.Windows.Forms.Button();
+            this.timerCheckMessages = new System.Windows.Forms.Timer(this.components);
+            this.cbOnlineUsers = new System.Windows.Forms.ComboBox();
+            this.btnVoegToe = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -40,14 +44,14 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(9, 9);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(106, 13);
+            this.label1.Size = new System.Drawing.Size(145, 13);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Aan het chatten met:";
+            this.label1.Text = "Gebruikers in deze chatroom:";
             // 
             // lblPersoon2
             // 
             this.lblPersoon2.AutoSize = true;
-            this.lblPersoon2.Location = new System.Drawing.Point(121, 9);
+            this.lblPersoon2.Location = new System.Drawing.Point(12, 29);
             this.lblPersoon2.Name = "lblPersoon2";
             this.lblPersoon2.Size = new System.Drawing.Size(35, 13);
             this.lblPersoon2.TabIndex = 1;
@@ -55,12 +59,12 @@
             // 
             // tbBerichten
             // 
-            this.tbBerichten.Location = new System.Drawing.Point(12, 37);
+            this.tbBerichten.Location = new System.Drawing.Point(12, 54);
             this.tbBerichten.Multiline = true;
             this.tbBerichten.Name = "tbBerichten";
             this.tbBerichten.ReadOnly = true;
             this.tbBerichten.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tbBerichten.Size = new System.Drawing.Size(260, 315);
+            this.tbBerichten.Size = new System.Drawing.Size(260, 298);
             this.tbBerichten.TabIndex = 2;
             // 
             // tbMessage
@@ -82,11 +86,37 @@
             this.btnSend.UseVisualStyleBackColor = true;
             this.btnSend.Click += new System.EventHandler(this.btnSend_Click);
             // 
+            // timerCheckMessages
+            // 
+            this.timerCheckMessages.Enabled = true;
+            this.timerCheckMessages.Interval = 500;
+            this.timerCheckMessages.Tick += new System.EventHandler(this.timerCheckMessages_Tick);
+            // 
+            // cbOnlineUsers
+            // 
+            this.cbOnlineUsers.FormattingEnabled = true;
+            this.cbOnlineUsers.Location = new System.Drawing.Point(160, 6);
+            this.cbOnlineUsers.Name = "cbOnlineUsers";
+            this.cbOnlineUsers.Size = new System.Drawing.Size(121, 21);
+            this.cbOnlineUsers.TabIndex = 4;
+            // 
+            // btnVoegToe
+            // 
+            this.btnVoegToe.Location = new System.Drawing.Point(206, 29);
+            this.btnVoegToe.Name = "btnVoegToe";
+            this.btnVoegToe.Size = new System.Drawing.Size(75, 23);
+            this.btnVoegToe.TabIndex = 5;
+            this.btnVoegToe.Text = "Voeg Toe";
+            this.btnVoegToe.UseVisualStyleBackColor = true;
+            this.btnVoegToe.Click += new System.EventHandler(this.btnVoegToe_Click);
+            // 
             // Chat
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 505);
+            this.Controls.Add(this.btnVoegToe);
+            this.Controls.Add(this.cbOnlineUsers);
             this.Controls.Add(this.btnSend);
             this.Controls.Add(this.tbMessage);
             this.Controls.Add(this.tbBerichten);
@@ -110,5 +140,8 @@
         private System.Windows.Forms.TextBox tbBerichten;
         private System.Windows.Forms.TextBox tbMessage;
         private System.Windows.Forms.Button btnSend;
+        private System.Windows.Forms.Timer timerCheckMessages;
+        private System.Windows.Forms.ComboBox cbOnlineUsers;
+        private System.Windows.Forms.Button btnVoegToe;
     }
 }

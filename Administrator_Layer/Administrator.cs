@@ -99,5 +99,24 @@ namespace Administrator_Layer
         {
             this.data.AddUserToChatroom(userID, roomID);
         }
+
+        public List<int> GetUsersFromChatroom(int roomID)
+        {
+            List<int> returned = new List<int>();
+
+            DataTable dt = this.data.GetUsersFromChatroom(roomID);
+
+            foreach (DataRow d in dt.Rows)
+            {
+                returned.Add(Convert.ToInt32(d[0]));
+            }
+
+            return returned;
+        }
+
+        public void DeleteUserFromRoom(int userID, int RoomID)
+        {
+            this.data.DeleteUserFromRoom(userID, RoomID);
+        }
     }
 }
