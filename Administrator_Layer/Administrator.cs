@@ -74,6 +74,11 @@ namespace Administrator_Layer
             return returned;
         }
 
+        public Object HaalGebruikerOp(int userID)
+        {
+            return this.data.HaalGebruikerOp(userID);
+        }
+
         public List<int> ReturnUserChatrooms(int userID)
         {
             // return this.data.
@@ -88,6 +93,11 @@ namespace Administrator_Layer
         public void CreateRoom(out int roomID)
         {
             this.data.CreateRoom(out roomID);
+        }
+
+        public void AddUserToChatroom(int userID, int roomID)
+        {
+            this.data.AddUserToChatroom(userID, roomID);
         }
     }
 }

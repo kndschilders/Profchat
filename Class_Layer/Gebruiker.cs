@@ -16,6 +16,7 @@ namespace Class_Layer
         public string Naam { get; private set; }
         public int IsOnline { get; private set; }
         public bool IsChatting { get; private set; }
+        public List<int> currentRooms { get; private set; }
 
         public Gebruiker(int id, string naam, int isOnline)
         {
@@ -23,6 +24,7 @@ namespace Class_Layer
             this.Naam = naam;
             this.IsOnline = isOnline;
             this.IsChatting = false;
+            this.currentRooms = new List<int>();
         }
 
         public int returnID()

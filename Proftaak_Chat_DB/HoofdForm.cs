@@ -17,6 +17,7 @@ namespace Proftaak_Chat_DB
         Administrator admin;
         Form p;
         int gebrID;
+        Object gebruiker;
         
         public HoofdForm(Form previous)
         {
@@ -44,6 +45,9 @@ namespace Proftaak_Chat_DB
 
             // Set selectedindex of lbContacts
             this.lbContacts.SelectedIndex = 0;
+
+            // get gebruiker
+            //this.gebruiker = this.admin.HaalGebruikerOp(gebrID);
         }
 
         public HoofdForm(Form previous, int gebruikerID)
@@ -108,7 +112,13 @@ namespace Proftaak_Chat_DB
                     form.Show();
                     // Set IsChatting to true
                     objType.GetProperty("IsChatting").SetValue(selectedObj, true, null);
+                    List<int> roomsList = (List<int>)(objType.GetProperty("currentRooms").GetValue(this.gebruiker, null));
+                    roomsList.Add(roomID);
                     this.lbContacts.Invalidate();
+
+                    // add both users to user_chatroom
+                    this.admin.AddUserToChatroom(gebrID, roomID);
+                    this.admin.AddUserToChatroom(client2ID, roomID);
                 }
                 else
                 {
@@ -223,15 +233,26 @@ namespace Proftaak_Chat_DB
 
         private void CheckForNewChats()
         {
-            List<int> rooms = this.admin.GetUserChatrooms(gebrID);
+            this.gebruiker = this.admin.HaalGebruikerOp(gebrID);
 
-            // if user is currently in rooms
-            if (rooms != null)
-            {
-                foreach (int room in rooms)
+            if (gebruiker != null) {
+                List<int> rooms = this.admin.GetUserChatrooms(gebrID);
+
+                // if user is currently in rooms
+                if (rooms != null)
                 {
-                    Form form = new Chat(this, lbContacts.SelectedItem, room);
-                    form.Show();
+                    foreach (int room in rooms)
+                    {
+                        // check if gebruiker.currentrooms contains a room in rooms
+                        Type objType = this.gebruiker.GetType();
+                        List<int> roomsList = (List<int>)(objType.GetProperty("currentRooms").GetValue(this.gebruiker, null));
+
+                        if (!roomsList.Contains(room))
+                        {
+                            Form form = new Chat(this, lbContacts.SelectedItem, room);
+                            form.Show();
+                        }
+                    }
                 }
             }
         }

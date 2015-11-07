@@ -145,5 +145,12 @@ namespace Class_Layer
 
             return returned;
         }
+
+        public void AddUserToChatroom(int userID, int roomID)
+        {
+            string query = "INSERT INTO USER_CHATROOM VALUES(" + userID + ", " + roomID + ")";
+
+            Database.ExecuteQuery(query);
+        }
     }
 }
