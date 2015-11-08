@@ -101,20 +101,15 @@ namespace Administrator_Layer
 
             foreach (DataRow row in dt.Rows)
             {
-                int userID;
+                string username;
                 string message;
                 string senddate;
 
-                userID = Convert.ToInt32(row.ItemArray[0]);
-                message = Convert.ToString(row.ItemArray[1]);
-                senddate = Convert.ToString(row.ItemArray[2]);
+                username = Convert.ToString(row.ItemArray[0]);
+                senddate = Convert.ToString(row.ItemArray[1]);
+                message = Convert.ToString(row.ItemArray[2]);
 
-                // Haal gebruiker op
-                Gebruiker gebr = this.data.HaalGebruikerOp(userID);
-
-                string gebrNaam = gebr.Naam;
-
-                returned.Add(string.Format("{0}<{1}>: {2}", gebrNaam, senddate.Split(' ')[1], message));
+                returned.Add(string.Format("{0}<{1}>: {2}", username, senddate, message));
             }
 
             return returned;

@@ -118,7 +118,7 @@ namespace Class_Layer
         /// <returns>Returns a DataTable containing all messages of the chat room</returns>
         public DataTable ReturnMessages(int chatroomID)
         {
-            string query = "SELECT USERID, MESSAGEBODY, SENDDATE FROM MESSAGES WHERE CHATROOMID = " + chatroomID + " ORDER BY ID";
+            string query = "SELECT U.NAAM, TO_CHAR(M.SENDDATE, 'hh24:mi:ss') AS SENDDATE, M.MESSAGEBODY FROM \"USER\" U, MESSAGES M WHERE M.USERID = U.ID AND CHATROOMID = " + chatroomID + " ORDER BY M.SENDDATE";
 
             return Database.RetrieveQuery(query);
         }
