@@ -144,6 +144,7 @@ namespace Proftaak_Chat_DB
             // 
             // cbOnlineUsers
             // 
+            this.cbOnlineUsers.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbOnlineUsers.FormattingEnabled = true;
             this.cbOnlineUsers.Location = new System.Drawing.Point(160, 6);
             this.cbOnlineUsers.Name = "cbOnlineUsers";

@@ -40,7 +40,7 @@ namespace Proftaak_Chat_DB
             this.lbContacts.DrawMode = DrawMode.OwnerDrawFixed;
             this.lbContacts.DrawItem += new DrawItemEventHandler(this.listBox_DrawItem);
 
-            // Fill lbContacts
+            //// Fill lbContacts
             this.lbContacts.Items.Clear();
             List<object> newList = this.admin.Vrijwilligers.OrderBy(i => i.GetType().GetProperty("IsOnline").GetValue(i, null)).Reverse().ToList<object>();
 
@@ -62,10 +62,10 @@ namespace Proftaak_Chat_DB
                 this.lbContacts.Items.Add(obj);
             }
 
-            // Set selectedindex of lbContacts
+            //// Set selectedindex of lbContacts
             this.lbContacts.SelectedIndex = 0;
 
-            // get gebruiker
+            //// get gebruiker
             this.gebruiker = this.admin.HaalGebruikerOp(this.gebrID);
         }
 
@@ -110,11 +110,11 @@ namespace Proftaak_Chat_DB
                 {
                     this.admin.CreateRoom(out roomID);
 
-                    // Set IsChatting to true
+                    //// Set IsChatting to true
                     objType.GetProperty("IsChatting").SetValue(selectedObj, true, null);
                     this.lbContacts.Invalidate();
 
-                    // Add both users to user_chatroom
+                    //// Add both users to user_chatroom
                     this.admin.AddUserToChatroom(this.gebrID, roomID);
                     this.admin.AddUserToChatroom(client2ID, roomID);
                 }
@@ -158,12 +158,12 @@ namespace Proftaak_Chat_DB
         {
             try
             {
-                // Draw the background of the ListBox control for each item.
+                //// Draw the background of the ListBox control for each item.
                 e.DrawBackground();
 
                 Brush myBrush = new SolidBrush(e.ForeColor);
 
-                // Set custom color based on IsOnline
+                //// Set custom color based on IsOnline
                 object obj = this.lbContacts.Items[e.Index];
                 if (Convert.ToInt32(obj.GetType().GetProperty("IsOnline").GetValue(obj, null)) == 1)
                 {
@@ -253,10 +253,10 @@ namespace Proftaak_Chat_DB
             {
                 List<int> rooms = this.admin.GetUserChatrooms(this.gebrID);
 
-                // if user is currently in rooms
+                //// if user is currently in rooms
                 if (rooms != null)
                 {
-                    // check if gebruiker.currentrooms contains a room in rooms
+                    //// check if gebruiker.currentrooms contains a room in rooms
                     Type objType = this.gebruiker.GetType();
                     ReadOnlyCollection<int> roomsList = (ReadOnlyCollection<int>)objType.GetMethod("GetCurrentRooms").Invoke(this.gebruiker, null);
                     

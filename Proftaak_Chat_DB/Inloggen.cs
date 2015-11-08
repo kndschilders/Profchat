@@ -31,7 +31,7 @@ namespace Proftaak_Chat_DB
 
             this.Admin = new Administrator();
 
-            // databind vrijwilligers
+            //// databind vrijwilligers
             this.cbUsers.DataSource = this.Admin.Vrijwilligers;
         }
 
@@ -50,6 +50,7 @@ namespace Proftaak_Chat_DB
             int gebrID = 0;
 
             object selectedObj = this.cbUsers.SelectedItem;
+
             if (selectedObj != null)
             {
                 Type objType = selectedObj.GetType();

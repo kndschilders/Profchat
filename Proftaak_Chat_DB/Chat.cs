@@ -159,12 +159,16 @@ namespace Proftaak_Chat_DB
 
             List<string> messages = this.admin.ReturnMessages(this.roomID);
 
-            this.tbBerichten.Text = string.Empty;
+            this.tbBerichten.Clear();
+
+            string insertText = string.Empty;
             
             foreach (string message in messages)
             {
-                this.tbBerichten.Text += message + Environment.NewLine;
+                insertText += message + Environment.NewLine;
             }
+
+            this.tbBerichten.AppendText(insertText);
         }
 
         /// <summary>
