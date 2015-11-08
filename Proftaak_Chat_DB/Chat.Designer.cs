@@ -1,6 +1,15 @@
-﻿namespace Proftaak_Chat_DB
+﻿//-----------------------------------------------------------------------
+// <copyright file="Chat.Designer.cs" company="ICT4Participation">
+//     Copyright (c) ICT4Participation. All rights reserved.
+// </copyright>
+// <author>ICT4Participation</author>
+//-----------------------------------------------------------------------
+namespace Proftaak_Chat_DB
 {
-    partial class Chat
+    /// <summary>
+    /// The designer class of the <see cref="Chat" /> form.
+    /// </summary>
+    public partial class Chat
     {
         /// <summary>
         /// Required designer variable.
@@ -8,15 +17,56 @@
         private System.ComponentModel.IContainer components = null;
 
         /// <summary>
+        /// A label on the <see cref="Chat"/> form
+        /// </summary>
+        private System.Windows.Forms.Label label1;
+
+        /// <summary>
+        /// A label on the <see cref="Chat"/> form
+        /// </summary>
+        private System.Windows.Forms.Label lblPersoon2;
+
+        /// <summary>
+        /// A text box on the <see cref="Chat"/> form
+        /// </summary>
+        private System.Windows.Forms.TextBox tbBerichten;
+
+        /// <summary>
+        /// A text box on the <see cref="Chat"/> form
+        /// </summary>
+        private System.Windows.Forms.TextBox tbMessage;
+
+        /// <summary>
+        /// A button on the <see cref="Chat"/> form
+        /// </summary>
+        private System.Windows.Forms.Button btnSend;
+
+        /// <summary>
+        /// A timer on the <see cref="Chat"/> form
+        /// </summary>
+        private System.Windows.Forms.Timer timerCheckMessages;
+
+        /// <summary>
+        /// A combo box on the <see cref="Chat"/> form
+        /// </summary>
+        private System.Windows.Forms.ComboBox cbOnlineUsers;
+
+        /// <summary>
+        /// A button on the <see cref="Chat"/> form
+        /// </summary>
+        private System.Windows.Forms.Button btnVoegToe;
+
+        /// <summary>
         /// Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (components != null))
+            if (disposing && (this.components != null))
             {
-                components.Dispose();
+                this.components.Dispose();
             }
+
             base.Dispose(disposing);
         }
 
@@ -134,14 +184,5 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label lblPersoon2;
-        private System.Windows.Forms.TextBox tbBerichten;
-        private System.Windows.Forms.TextBox tbMessage;
-        private System.Windows.Forms.Button btnSend;
-        private System.Windows.Forms.Timer timerCheckMessages;
-        private System.Windows.Forms.ComboBox cbOnlineUsers;
-        private System.Windows.Forms.Button btnVoegToe;
     }
 }

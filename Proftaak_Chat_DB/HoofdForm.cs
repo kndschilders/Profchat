@@ -1,78 +1,64 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using Administrator_Layer;
-using System.Reflection;
-using System.Collections.ObjectModel;
-
+﻿//-----------------------------------------------------------------------
+// <copyright file="HoofdForm.cs" company="ICT4Participation">
+//     Copyright (c) ICT4Participation. All rights reserved.
+// </copyright>
+// <author>ICT4Participation</author>
+//-----------------------------------------------------------------------
 namespace Proftaak_Chat_DB
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using System.ComponentModel;
+    using System.Data;
+    using System.Drawing;
+    using System.Linq;
+    using System.Reflection;
+    using System.Text;
+    using System.Threading.Tasks;
+    using System.Windows.Forms;
+    using Administrator_Layer;
+
+    /// <summary>
+    /// The file containing the code of the <see cref="HoofdForm" /> form.
+    /// </summary>
     public partial class HoofdForm : Form
     {
-        Administrator admin;
-        Form p;
-        int gebrID;
-        Object gebruiker;
-        
-        public HoofdForm(Form previous)
-        {
-            InitializeComponent();
-
-            this.p = previous;
-
-            admin = new Administrator();
-            lbContacts.DrawMode = DrawMode.OwnerDrawFixed;
-            lbContacts.DrawItem += new DrawItemEventHandler(listBox_DrawItem);
-
-            // Fill lbContacts
-            this.lbContacts.Items.Clear();
-            List<Object> newList = this.admin.Vrijwilligers.OrderBy(i => i.GetType().GetProperty("IsOnline").GetValue(i, null)).Reverse().ToList<Object>();
-            foreach(Object obj in newList)//this.admin.Vrijwilligers)
-            {
-                Type objType = obj.GetType();
-                if (objType.GetProperty("IsOnline") != null)
-                    if (Convert.ToInt32(objType.GetProperty("IsOnline").GetValue(obj, null)) == 1)
-                        this.lbContacts.ForeColor = Color.Blue;
-                    else
-                        this.lbContacts.ForeColor = Color.Red;
-                    this.lbContacts.Items.Add(obj);
-            }
-
-            // Set selectedindex of lbContacts
-            this.lbContacts.SelectedIndex = 0;
-
-            // get gebruiker
-            this.gebruiker = this.admin.HaalGebruikerOp(gebrID);
-        }
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="HoofdForm"/> class
+        /// </summary>
+        /// <param name="previous">The previous form</param>
+        /// <param name="gebruikerID">The ID of the user</param>
         public HoofdForm(Form previous, int gebruikerID)
         {
-            InitializeComponent();
+            this.InitializeComponent();
 
             this.p = previous;
             this.gebrID = gebruikerID;
 
-            admin = new Administrator();
-            lbContacts.DrawMode = DrawMode.OwnerDrawFixed;
-            lbContacts.DrawItem += new DrawItemEventHandler(listBox_DrawItem);
+            this.admin = new Administrator();
+            this.lbContacts.DrawMode = DrawMode.OwnerDrawFixed;
+            this.lbContacts.DrawItem += new DrawItemEventHandler(this.listBox_DrawItem);
 
             // Fill lbContacts
             this.lbContacts.Items.Clear();
-            List<Object> newList = this.admin.Vrijwilligers.OrderBy(i => i.GetType().GetProperty("IsOnline").GetValue(i, null)).Reverse().ToList<Object>();
-            foreach (Object obj in newList)//this.admin.Vrijwilligers)
+            List<object> newList = this.admin.Vrijwilligers.OrderBy(i => i.GetType().GetProperty("IsOnline").GetValue(i, null)).Reverse().ToList<object>();
+
+            foreach (object obj in newList)
             {
                 Type objType = obj.GetType();
                 if (objType.GetProperty("IsOnline") != null)
+                {
                     if (Convert.ToInt32(objType.GetProperty("IsOnline").GetValue(obj, null)) == 1)
+                    {
                         this.lbContacts.ForeColor = Color.Blue;
+                    }
                     else
+                    {
                         this.lbContacts.ForeColor = Color.Red;
+                    }
+                }
+
                 this.lbContacts.Items.Add(obj);
             }
 
@@ -80,51 +66,56 @@ namespace Proftaak_Chat_DB
             this.lbContacts.SelectedIndex = 0;
 
             // get gebruiker
-            this.gebruiker = this.admin.HaalGebruikerOp(gebrID);
+            this.gebruiker = this.admin.HaalGebruikerOp(this.gebrID);
         }
 
+        /// <summary>
+        /// Gets or sets a reference of the <see cref="Administration"/> class
+        /// </summary>
+        private Administrator admin { get; set; }
+
+        /// <summary>
+        /// Gets or sets a reference of the previous form
+        /// </summary>
+        private Form p { get; set; }
+
+        /// <summary>
+        /// Gets or sets a reference of the user ID
+        /// </summary>
+        private int gebrID { get; set; }
+
+        /// <summary>
+        /// Gets or sets a reference of the user object
+        /// </summary>
+        private object gebruiker { get; set; }
+
+        /// <summary>
+        /// Start a new chat with the selected person on button click
+        /// </summary>
+        /// <param name="sender">The sender parameter</param>
+        /// <param name="e">The EventArgs parameter</param>
         private void btnStartChat_Click(object sender, EventArgs e)
         {
-            // check if player is in user_chatroom
-            //DataTable chatRooms = this.admin.GetUserChatrooms(gebrID);
-            //if (chatRooms != null)
-            //{
-
-            //}
-
-
-
-
-            Object selectedObj = this.lbContacts.SelectedItem;
+            object selectedObj = this.lbContacts.SelectedItem;
             if (selectedObj != null)
             {
                 Type objType = selectedObj.GetType();
 
-
-                // get id of selected person
+                //// Get id of selected person
                 int client2ID = Convert.ToInt32(objType.GetProperty("ID").GetValue(selectedObj, null));
 
-
-                // create new chatroom with person, store chatroomID
                 int roomID;
 
-                
                 if (Convert.ToInt32(objType.GetProperty("IsOnline").GetValue(selectedObj, null)) == 1 && !Convert.ToBoolean(objType.GetProperty("IsChatting").GetValue(selectedObj, null)))
                 {
                     this.admin.CreateRoom(out roomID);
 
-                    //Form form = new Chat(this, selectedObj, roomID);
-                    //form.Show();
                     // Set IsChatting to true
                     objType.GetProperty("IsChatting").SetValue(selectedObj, true, null);
-                    //List<int> roomsList = (List<int>)(objType.GetProperty("currentRooms").GetValue(this.gebruiker, null));
-                    //ReadOnlyCollection<int> roomsList = (ReadOnlyCollection<int>)(objType.GetMethod("GetCurrentRooms").Invoke(this.gebruiker, null));
-                    //roomsList.Add(roomID);
-                    //(ReadOnlyCollection<int>)(objType.GetMethod("SetCurrentRooms").Invoke(this.gebruiker, null));
                     this.lbContacts.Invalidate();
 
-                    // add both users to user_chatroom
-                    this.admin.AddUserToChatroom(gebrID, roomID);
+                    // Add both users to user_chatroom
+                    this.admin.AddUserToChatroom(this.gebrID, roomID);
                     this.admin.AddUserToChatroom(client2ID, roomID);
                 }
                 else
@@ -134,36 +125,35 @@ namespace Proftaak_Chat_DB
             }
         }
 
+        /// <summary>
+        /// Update the start chat button on list box selected index change
+        /// </summary>
+        /// <param name="sender">The sender parameter</param>
+        /// <param name="e">The EventArgs parameter</param>
         private void lbContacts_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Object selectedObj = this.lbContacts.SelectedItem;
+            object selectedObj = this.lbContacts.SelectedItem;
             if (selectedObj != null)
             {
                 Type objType = selectedObj.GetType();
                 if (Convert.ToInt32(objType.GetProperty("IsOnline").GetValue(selectedObj, null)) == 1 &&
                     !Convert.ToBoolean(objType.GetProperty("IsChatting").GetValue(selectedObj, null)) &&
-                    Convert.ToInt32(objType.GetProperty("ID").GetValue(selectedObj, null)) != gebrID)
-                    this.btnStartChat.Enabled = true;
-                else
-                    this.btnStartChat.Enabled = false;
-            }
-        }
-
-        private void lbContacts_DoubleClick(object sender, EventArgs e)
-        {
-            Object selectedObj = this.lbContacts.SelectedItem;
-            Type objType = selectedObj.GetType();
-            PropertyInfo[] array = objType.GetProperties();
-
-            foreach (PropertyInfo p in array)
-            {
-                if (p != null)
+                    Convert.ToInt32(objType.GetProperty("ID").GetValue(selectedObj, null)) != this.gebrID)
                 {
-                    MessageBox.Show(Convert.ToString(p.GetValue(selectedObj, null)));
+                    this.btnStartChat.Enabled = true;
+                }
+                else
+                {
+                    this.btnStartChat.Enabled = false;
                 }
             }
         }
 
+        /// <summary>
+        /// A custom draw item method to allow for different colors per item
+        /// </summary>
+        /// <param name="sender">The sender parameter</param>
+        /// <param name="e">The EventArgs parameter</param>
         private void listBox_DrawItem(object sender, DrawItemEventArgs e)
         {
             try
@@ -174,76 +164,94 @@ namespace Proftaak_Chat_DB
                 Brush myBrush = new SolidBrush(e.ForeColor);
 
                 // Set custom color based on IsOnline
-                Object obj = lbContacts.Items[e.Index];
+                object obj = this.lbContacts.Items[e.Index];
                 if (Convert.ToInt32(obj.GetType().GetProperty("IsOnline").GetValue(obj, null)) == 1)
                 {
-                    // online user
+                    //// online user
                     myBrush = new SolidBrush(Color.Green);
                 }
                 else
                 {
-                    // offline user
+                    //// offline user
                     myBrush = new SolidBrush(Color.Red);
                 }
+
                 if (Convert.ToBoolean(obj.GetType().GetProperty("IsChatting").GetValue(obj, null)))
                 {
-                    // user currently chatting
+                    //// user currently chatting
                     myBrush = new SolidBrush(Color.Blue);
                 }
-                if (Convert.ToInt32(obj.GetType().GetProperty("ID").GetValue(obj, null)) == gebrID)
+
+                if (Convert.ToInt32(obj.GetType().GetProperty("ID").GetValue(obj, null)) == this.gebrID)
                 {
-                    // yourself
+                    //// yourself
                     myBrush = new SolidBrush(Color.DarkGray);
                 }
 
-                // Draw the current item text based on the current 
-                // Font and the custom brush settings.
-                //
-                e.Graphics.DrawString(((ListBox)sender).Items[e.Index].ToString(),
-                            e.Font, myBrush, e.Bounds, StringFormat.GenericDefault);
-                // If the ListBox has focus, draw a focus rectangle 
-                // around the selected item.
-                //
+                //// Draw the current item text based on the current font and the custom brush settings.
+                e.Graphics.DrawString(((ListBox)sender).Items[e.Index].ToString(), e.Font, myBrush, e.Bounds, StringFormat.GenericDefault);
+                //// If the ListBox has focus, draw a focus rectangle around the selected item.
                 e.DrawFocusRectangle();
             }
-            catch(Exception)
+            catch (Exception)
             {
-                // ignore exception
+                //// ignore exception
             }
         }
 
+        /// <summary>
+        /// Set the user to offline and close the previous form on form close
+        /// </summary>
+        /// <param name="sender">The sender parameter</param>
+        /// <param name="e">The EventArgs parameter</param>
         private void HoofdForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            this.admin.SetOffline(gebrID);
+            this.admin.SetOffline(this.gebrID);
             this.p.Close();
         }
 
+        /// <summary>
+        /// Check for online people
+        /// </summary>
+        /// <param name="selectedindex">The selected index of the list box to prevent it from resetting</param>
         private void CheckOnlinePeople(int selectedindex)
         {
             this.admin.UpdateGebruikers();
 
-            // Fill lbContacts
+            //// Fill lbContacts
             this.lbContacts.Items.Clear();
-            List<Object> newList = this.admin.Vrijwilligers.OrderBy(i => i.GetType().GetProperty("IsOnline").GetValue(i, null)).Reverse().ToList<Object>();
-            foreach (Object obj in newList)//this.admin.Vrijwilligers)
+            List<object> newList = this.admin.Vrijwilligers.OrderBy(i => i.GetType().GetProperty("IsOnline").GetValue(i, null)).Reverse().ToList<object>();
+
+            foreach (object obj in newList)
             {
                 Type objType = obj.GetType();
+
                 if (objType.GetProperty("IsOnline") != null)
+                {
                     if (Convert.ToInt32(objType.GetProperty("IsOnline").GetValue(obj, null)) == 1)
+                    {
                         this.lbContacts.ForeColor = Color.Blue;
+                    }
                     else
+                    {
                         this.lbContacts.ForeColor = Color.Red;
+                    }
+                }
+
                 this.lbContacts.Items.Add(obj);
             }
+
             this.lbContacts.SelectedIndex = selectedindex;
         }
 
+        /// <summary>
+        /// Check for new chats
+        /// </summary>
         private void CheckForNewChats()
         {
-
-            if (gebruiker != null)
+            if (this.gebruiker != null)
             {
-                List<int> rooms = this.admin.GetUserChatrooms(gebrID);
+                List<int> rooms = this.admin.GetUserChatrooms(this.gebrID);
 
                 // if user is currently in rooms
                 if (rooms != null)
@@ -251,13 +259,12 @@ namespace Proftaak_Chat_DB
                     // check if gebruiker.currentrooms contains a room in rooms
                     Type objType = this.gebruiker.GetType();
                     ReadOnlyCollection<int> roomsList = (ReadOnlyCollection<int>)objType.GetMethod("GetCurrentRooms").Invoke(this.gebruiker, null);
+                    
                     foreach (int room in rooms)
                     {
-
                         if (!roomsList.Contains(room))
                         {
-                            //roomsList.Add(room);
-                            objType.GetMethod("AddRoom").Invoke(this.gebruiker, new Object[]{room});
+                            objType.GetMethod("AddRoom").Invoke(this.gebruiker, new object[] { room });
                             Form form = new Chat(this, this.gebruiker, room);
                             form.Show();
                         }
@@ -266,10 +273,15 @@ namespace Proftaak_Chat_DB
             }
         }
 
+        /// <summary>
+        /// Check for new chats and online people on timer tick
+        /// </summary>
+        /// <param name="sender">The sender parameter</param>
+        /// <param name="e">The EventArgs parameter</param>
         private void chatCheckTimer_Tick(object sender, EventArgs e)
         {
-            CheckForNewChats();
-            CheckOnlinePeople(this.lbContacts.SelectedIndex);
+            this.CheckForNewChats();
+            this.CheckOnlinePeople(this.lbContacts.SelectedIndex);
         }
     }
 }

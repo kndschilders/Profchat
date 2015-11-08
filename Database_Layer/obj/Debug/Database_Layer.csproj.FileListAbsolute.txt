@@ -9,3 +9,4 @@ C:\Users\Koen\Source\Repos\Profchat\Database_Layer\bin\Debug\Database_Layer.pdb
 C:\Users\Koen\Source\Repos\Profchat\Database_Layer\bin\Debug\Oracle.DataAccess.dll
 C:\Users\Koen\Source\Repos\Profchat\Database_Layer\obj\Debug\Database_Layer.dll
 C:\Users\Koen\Source\Repos\Profchat\Database_Layer\obj\Debug\Database_Layer.pdb
+C:\Users\Koen\Source\Repos\Profchat\Database_Layer\obj\Debug\Database_Layer.csprojResolveAssemblyReference.cache

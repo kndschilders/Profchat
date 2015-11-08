@@ -1,40 +1,78 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using Administrator_Layer;
-
+﻿//-----------------------------------------------------------------------
+// <copyright file="Chat.cs" company="ICT4Participation">
+//     Copyright (c) ICT4Participation. All rights reserved.
+// </copyright>
+// <author>ICT4Participation</author>
+//-----------------------------------------------------------------------
 namespace Proftaak_Chat_DB
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.Data;
+    using System.Drawing;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+    using System.Windows.Forms;
+    using Administrator_Layer;
+
+    /// <summary>
+    /// The file containing the code of the <see cref="Chat" /> form.
+    /// </summary>
     public partial class Chat : Form
     {
+        /// <summary>
+        /// A reference to the last form
+        /// </summary>
         private Form p;
-        private Object gebr;
-        private int gebrID;
-        private int RoomID;
-        private Administrator admin;
-        private List<Object> otherOnlinePeople;
 
-        public Chat(Form previous, Object gebruiker, int roomID)
+        /// <summary>
+        /// A reference of the user
+        /// </summary>
+        private object gebr;
+
+        /// <summary>
+        /// A reference of the user ID
+        /// </summary>
+        private int gebrID;
+
+        /// <summary>
+        /// A reference of the room ID
+        /// </summary>
+        private int roomID;
+
+        /// <summary>
+        /// A reference of the <see cref="Administrator"/> class
+        /// </summary>
+        private Administrator admin;
+
+        /// <summary>
+        /// A list of all online users not currently connected to this room
+        /// </summary>
+        private List<object> otherOnlinePeople;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Chat"/> class
+        /// </summary>
+        /// <param name="previous">The previous form</param>
+        /// <param name="gebruiker">The user</param>
+        /// <param name="roomID">The chat room ID</param>
+        public Chat(Form previous, object gebruiker, int roomID)
         {
-            InitializeComponent();
+            this.InitializeComponent();
 
             this.p = previous;
             this.gebr = gebruiker;
-            this.RoomID = roomID;
+            this.roomID = roomID;
 
             this.admin = new Administrator();
 
             // set gebrID
-            if (gebr != null)
+            if (this.gebr != null)
             {
-                Type objType = gebr.GetType();
-                gebrID = Convert.ToInt32(objType.GetProperty("ID").GetValue(gebr, null));
+                Type objType = this.gebr.GetType();
+                this.gebrID = Convert.ToInt32(objType.GetProperty("ID").GetValue(this.gebr, null));
             }
 
             // get messages
@@ -44,27 +82,37 @@ namespace Proftaak_Chat_DB
             this.tbMessage.Focus();
         }
 
+        /// <summary>
+        /// Set the IsChatting value to false when closing a chat room
+        /// </summary>
+        /// <param name="sender">The sender object</param>
+        /// <param name="e">The FormClosedEventArgs</param>
         private void Chat_FormClosed(object sender, FormClosedEventArgs e)
         {
             this.p.Show();
             this.p.Invalidate();
-            if (gebr != null)
+            if (this.gebr != null)
             {
-                Type objType = gebr.GetType();
-                if (Convert.ToInt32(objType.GetProperty("IsOnline").GetValue(gebr, null)) == 1)
+                Type objType = this.gebr.GetType();
+                if (Convert.ToInt32(objType.GetProperty("IsOnline").GetValue(this.gebr, null)) == 1)
                 {
                     // Set IsChatting to true
-                    objType.GetProperty("IsChatting").SetValue(gebr, false, null);
+                    objType.GetProperty("IsChatting").SetValue(this.gebr, false, null);
                 }
             }
         }
 
+        /// <summary>
+        /// Send a message
+        /// </summary>
         private void SendMessage()
         {
             string message = this.tbMessage.Text.Trim();
 
             if (message != null)
-                this.admin.SendMessage(message, gebrID, RoomID);
+            {
+                this.admin.SendMessage(message, this.gebrID, this.roomID);
+            }
 
             // update messages
             this.UpdateMessages();
@@ -74,15 +122,19 @@ namespace Proftaak_Chat_DB
             this.tbMessage.Focus();
         }
 
+        /// <summary>
+        /// Update the messages of the chat room
+        /// </summary>
         private void UpdateMessages()
         {
             // Get other users
-            List<int> otherUsers = this.admin.GetUsersFromChatroom(this.RoomID);
+            List<int> otherUsers = this.admin.GetUsersFromChatroom(this.roomID);
 
             List<string> otherUserNames = new List<string>();
             
-            foreach(int uID in otherUsers) {
-                Object g = this.admin.HaalGebruikerOp(uID);
+            foreach (int uID in otherUsers)
+            {
+                object g = this.admin.HaalGebruikerOp(uID);
                 Type objType = g.GetType();
                 otherUserNames.Add((string)objType.GetProperty("Naam").GetValue(g, null));
             }
@@ -94,14 +146,18 @@ namespace Proftaak_Chat_DB
             for (int i = 0; i < otherUserNames.Count; i++)
             {
                 if (i < otherUserNames.Count - 1)
+                {
                     labelText += otherUserNames[i] + ", ";
+                }
                 else
+                {
                     labelText += otherUserNames[i];
+                }
             }
 
             this.lblPersoon2.Text = labelText;
 
-            List<string> messages = this.admin.ReturnMessages(RoomID);
+            List<string> messages = this.admin.ReturnMessages(this.roomID);
 
             this.tbBerichten.Text = string.Empty;
             
@@ -111,41 +167,54 @@ namespace Proftaak_Chat_DB
             }
         }
 
+        /// <summary>
+        /// Send a message on click
+        /// </summary>
+        /// <param name="sender">The sender object</param>
+        /// <param name="e">The EventArgs parameter</param>
         private void btnSend_Click(object sender, EventArgs e)
         {
             this.SendMessage();
         }
 
+        /// <summary>
+        /// Delete the user from the chat room on close
+        /// </summary>
+        /// <param name="sender">The sender object</param>
+        /// <param name="e">The EventArgs parameter</param>
         private void Chat_FormClosing(object sender, FormClosingEventArgs e)
         {
-            // close room
-            this.admin.DeleteUserFromRoom(gebrID, RoomID);
+            this.admin.DeleteUserFromRoom(this.gebrID, this.roomID);
         }
 
+        /// <summary>
+        /// Call update methods on timer tick
+        /// </summary>
+        /// <param name="sender">The sender object</param>
+        /// <param name="e">The EventArgs parameter</param>
         private void timerCheckMessages_Tick(object sender, EventArgs e)
         {
             this.UpdateMessages();
             this.UpdateOnlineUsers();
         }
 
+        /// <summary>
+        /// Update the currently online users
+        /// </summary>
         private void UpdateOnlineUsers()
         {
             this.admin.UpdateGebruikers();
 
             if (this.otherOnlinePeople == null)
-                this.otherOnlinePeople = new List<Object>();
+            {
+                this.otherOnlinePeople = new List<object>();
+            }
 
+            List<object> clone = new List<object>();
+            List<object> newList = this.admin.Vrijwilligers.OrderBy(i => i.GetType().GetProperty("IsOnline").GetValue(i, null)).Reverse().ToList<object>();
+            List<int> chatroomUsers = this.admin.GetUsersFromChatroom(this.roomID);
 
-            List<Object> clone = new List<Object>();
-
-
-            List<Object> newList = this.admin.Vrijwilligers.OrderBy(i => i.GetType().GetProperty("IsOnline").GetValue(i, null)).Reverse().ToList<Object>();
-
-
-            // for each user currently in the chatroom
-            List<int> chatroomUsers = this.admin.GetUsersFromChatroom(RoomID);
-
-            foreach (Object obj in newList)
+            foreach (object obj in newList)
             {
                 Type objType = obj.GetType();
                 if (objType.GetProperty("IsOnline") != null &&
@@ -156,13 +225,11 @@ namespace Proftaak_Chat_DB
                 }
             }
 
-
             List<int> cloneIDs = new List<int>();
             List<int> otherOnlinePeopleIDs = new List<int>();
 
-
             // fill cloneID list
-            foreach (Object obj in clone)
+            foreach (object obj in clone)
             {
                 Type objType = obj.GetType();
                 cloneIDs.Add((int)objType.GetProperty("ID").GetValue(obj));
@@ -170,7 +237,7 @@ namespace Proftaak_Chat_DB
 
             bool areEqual = true;
 
-            foreach (Object obj in this.otherOnlinePeople)
+            foreach (object obj in this.otherOnlinePeople)
             {
                 Type objType = obj.GetType();
                 int objID = (int)objType.GetProperty("ID").GetValue(obj);
@@ -192,29 +259,40 @@ namespace Proftaak_Chat_DB
                 }
             }
 
-
             if (!areEqual)
             {
                 this.otherOnlinePeople = clone;
 
                 if (this.otherOnlinePeople.Count == 0)
+                {
                     this.cbOnlineUsers.DataSource = null;
+                }
                 else
+                {
                     this.cbOnlineUsers.DataSource = this.otherOnlinePeople;
+                }
             }
         }
 
+        /// <summary>
+        /// Add a user to the chat room
+        /// </summary>
+        /// <param name="sender">The sender object</param>
+        /// <param name="e">The EventArgs parameter</param>
         private void btnVoegToe_Click(object sender, EventArgs e)
         {
-            Object selectedObj = this.cbOnlineUsers.SelectedItem;
+            object selectedObj = this.cbOnlineUsers.SelectedItem;
 
-            if (selectedObj == null) return;
+            if (selectedObj == null)
+            {
+                return;
+            }
 
             Type objType = selectedObj.GetType();
 
             int uID = Convert.ToInt32(objType.GetProperty("ID").GetValue(selectedObj, null));
 
-            this.admin.AddUserToChatroom(uID, this.RoomID);
+            this.admin.AddUserToChatroom(uID, this.roomID);
         }
     }
 }

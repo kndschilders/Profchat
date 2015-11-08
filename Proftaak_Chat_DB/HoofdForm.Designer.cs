@@ -1,6 +1,15 @@
-﻿namespace Proftaak_Chat_DB
+﻿//-----------------------------------------------------------------------
+// <copyright file="HoofdForm.Designer.cs" company="ICT4Participation">
+//     Copyright (c) ICT4Participation. All rights reserved.
+// </copyright>
+// <author>ICT4Participation</author>
+//-----------------------------------------------------------------------
+namespace Proftaak_Chat_DB
 {
-    partial class HoofdForm
+    /// <summary>
+    /// The designer class of the <see cref="HoofdForm" /> form.
+    /// </summary>
+    public partial class HoofdForm
     {
         /// <summary>
         /// Required designer variable.
@@ -8,15 +17,36 @@
         private System.ComponentModel.IContainer components = null;
 
         /// <summary>
+        /// A list box on the <see cref="HoofdForm"/>
+        /// </summary>
+        private System.Windows.Forms.ListBox lbContacts;
+
+        /// <summary>
+        /// A label on the <see cref="HoofdForm"/>
+        /// </summary>
+        private System.Windows.Forms.Label label1;
+
+        /// <summary>
+        /// A button on the <see cref="HoofdForm"/>
+        /// </summary>
+        private System.Windows.Forms.Button btnStartChat;
+
+        /// <summary>
+        /// A timer on the <see cref="HoofdForm"/>
+        /// </summary>
+        private System.Windows.Forms.Timer chatCheckTimer;
+
+        /// <summary>
         /// Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (components != null))
+            if (disposing && (this.components != null))
             {
-                components.Dispose();
+                this.components.Dispose();
             }
+
             base.Dispose(disposing);
         }
 
@@ -43,7 +73,6 @@
             this.lbContacts.Size = new System.Drawing.Size(207, 290);
             this.lbContacts.TabIndex = 0;
             this.lbContacts.SelectedIndexChanged += new System.EventHandler(this.lbContacts_SelectedIndexChanged);
-            this.lbContacts.DoubleClick += new System.EventHandler(this.lbContacts_DoubleClick);
             // 
             // label1
             // 
@@ -89,11 +118,5 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.ListBox lbContacts;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button btnStartChat;
-        private System.Windows.Forms.Timer chatCheckTimer;
     }
 }
-

@@ -1,17 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Database_Layer;
-using Oracle.DataAccess.Client;
-using System.Data;
-using System.Data.SqlClient;
-
+﻿//-----------------------------------------------------------------------
+// <copyright file="Data.cs" company="ICT4Participation">
+//     Copyright (c) ICT4Participation. All rights reserved.
+// </copyright>
+// <author>ICT4Participation</author>
+//-----------------------------------------------------------------------
 namespace Class_Layer
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Data.SqlClient;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+    using Database_Layer;
+    using Oracle.DataAccess.Client;
+
+    /// <summary>
+    /// A subclass to communicate from the administration layer to the database
+    /// </summary>
     public class Data
     {
+        /// <summary>
+        /// Get all users from the database
+        /// </summary>
+        /// <returns>Returns a list of all users</returns>
         public List<Gebruiker> HaalGebruikersOp()
         {
             List<Gebruiker> returned = new List<Gebruiker>();
@@ -32,21 +45,16 @@ namespace Class_Layer
             return returned;
         }
 
+        /// <summary>
+        /// Get a user object given the user ID
+        /// </summary>
+        /// <param name="gebruikerID">The ID of the user</param>
+        /// <returns>Returns the user object</returns>
         public Gebruiker HaalGebruikerOp(int gebruikerID)
         {
             string query = "SELECT ID, NAAM, ISONLINE FROM \"USER\" WHERE ID = " + gebruikerID;
 
             DataTable dt = Database.RetrieveQuery(query);
-
-
-            //foreach (DataRow d in dt.Rows)
-            //{
-            //    int id = Convert.ToInt32(d["ID"]);
-            //    string naam = Convert.ToString(d["NAAM"]);
-            //    int isOnline = Convert.ToInt32(d["ISONLINE"]);
-
-            //    returned.Add(new Gebruiker(id, naam, isOnline));
-            //}
 
             int id = Convert.ToInt32(dt.Rows[0]["ID"]);
             string naam = Convert.ToString(dt.Rows[0]["NAAM"]);
@@ -55,14 +63,24 @@ namespace Class_Layer
             return new Gebruiker(id, naam, isOnline);
         }
 
+        /// <summary>
+        /// Update the online status of a user
+        /// </summary>
+        /// <param name="newStatus">The new online status of the user</param>
+        /// <param name="gebrID">The user of whom to change the online status</param>
+        /// <returns>Returns whether or not the operation has succeeded</returns>
         public bool UpdateOnlineStatus(bool newStatus, int gebrID)
         {
             string query = string.Empty;
 
             if (newStatus)
+            {
                 query = "UPDATE \"USER\" SET ISONLINE = 1 WHERE ID = " + gebrID;
+            }
             else
+            {
                 query = "UPDATE \"USER\" SET ISONLINE = 0 WHERE ID = " + gebrID;
+            }
             
             try
             {
@@ -78,6 +96,12 @@ namespace Class_Layer
             return false;
         }
 
+        /// <summary>
+        /// Insert a message in the database
+        /// </summary>
+        /// <param name="message">The message to insert</param>
+        /// <param name="gebrID">The ID of the owner of the message</param>
+        /// <param name="chatroomID">The chat room the message has been sent from</param>
         public void SendMessage(string message, int gebrID, int chatroomID)
         {
             string query = "INSERT INTO MESSAGES VALUES(MESSAGES_SEQ.NEXTVAL, " + gebrID + ", " + chatroomID + ", " + "'" + message + "'" + ", CURRENT_TIMESTAMP)";
@@ -87,6 +111,11 @@ namespace Class_Layer
             Database.ExecuteQuery(query);
         }
 
+        /// <summary>
+        /// Get all messages of a chat room
+        /// </summary>
+        /// <param name="chatroomID">The ID of the chat room</param>
+        /// <returns>Returns a DataTable containing all messages of the chat room</returns>
         public DataTable ReturnMessages(int chatroomID)
         {
             string query = "SELECT USERID, MESSAGEBODY, SENDDATE FROM MESSAGES WHERE CHATROOMID = " + chatroomID + " ORDER BY ID";
@@ -94,16 +123,11 @@ namespace Class_Layer
             return Database.RetrieveQuery(query);
         }
 
-        //public bool UserHasChatroom(int userID, int chatroomID)
-        //{
-        //    string query = "SELECT * FROM USER_CHATROOM WHERE USERID = " + userID + " AND CHATROOMID = " + chatroomID;
-
-        //    if (Database.RetrieveQuery(query) != null)
-        //        return true;
-
-        //    return false;
-        //}
-
+        /// <summary>
+        /// Get all chat rooms the given user is currently connected to
+        /// </summary>
+        /// <param name="userID">The ID of the user</param>
+        /// <returns>Returns a list of chat room numbers</returns>
         public List<int> GetUserChatrooms(int userID)
         {
             List<int> returned = new List<int>();
@@ -122,30 +146,23 @@ namespace Class_Layer
             return returned;
         }
 
+        /// <summary>
+        /// Create a new room
+        /// </summary>
+        /// <param name="roomId">The ID of the new chat room</param>
         public void CreateRoom(out int roomId)
         {
             string query = "INSERT INTO CHATROOM VALUES (CHATROOM_SEQ.NEXTVAL)";
             Database.ExecuteQuery(query);
-            // get id
+
             roomId = Database.ReturnIdLastInsertID("CHATROOM_SEQ");
         }
 
-        public List<int> ReturnUserChatrooms(int userID)
-        {
-            List<int> returned = new List<int>();
-
-            string query = "SELECT CHATROOMID FROM USER_CHATROOM WHERE USERID = " + userID;
-
-            DataTable dt = Database.RetrieveQuery(query);
-
-            foreach (DataRow d in dt.Rows)
-            {
-                returned.Add(Convert.ToInt32(d[0]));
-            }
-
-            return returned;
-        }
-
+        /// <summary>
+        /// Add a user to the given room
+        /// </summary>
+        /// <param name="userID">The ID of the user</param>
+        /// <param name="roomID">The ID of the chat room</param>
         public void AddUserToChatroom(int userID, int roomID)
         {
             string query = "INSERT INTO USER_CHATROOM VALUES(" + userID + ", " + roomID + ")";
@@ -153,6 +170,11 @@ namespace Class_Layer
             Database.ExecuteQuery(query);
         }
 
+        /// <summary>
+        /// Get all users from a chat room
+        /// </summary>
+        /// <param name="roomID">The ID of the chat room</param>
+        /// <returns>Returns a DataTable containing all the user IDs</returns>
         public DataTable GetUsersFromChatroom(int roomID)
         {
             string query = "SELECT USERID FROM USER_CHATROOM WHERE CHATROOMID = " + roomID;
@@ -160,9 +182,14 @@ namespace Class_Layer
             return Database.RetrieveQuery(query);
         }
 
-        public void DeleteUserFromRoom(int UserID, int roomID)
+        /// <summary>
+        /// Delete a user from a chat room
+        /// </summary>
+        /// <param name="userID">The ID of the user</param>
+        /// <param name="roomID">The ID of the chat room</param>
+        public void DeleteUserFromRoom(int userID, int roomID)
         {
-            string query = "DELETE FROM USER_CHATROOM WHERE USERID = " + UserID + " AND CHATROOMID = " + roomID;
+            string query = "DELETE FROM USER_CHATROOM WHERE USERID = " + userID + " AND CHATROOMID = " + roomID;
 
             Database.ExecuteQuery(query);
         }

@@ -1,51 +1,98 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Class_Layer;
-using System.Data;
-
+﻿//-----------------------------------------------------------------------
+// <copyright file="Administrator.cs" company="ICT4Participation">
+//     Copyright (c) ICT4Participation. All rights reserved.
+// </copyright>
+// <author>ICT4Participation</author>
+//-----------------------------------------------------------------------
 namespace Administrator_Layer
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+    using Class_Layer;
+
+    /// <summary>
+    /// This class is used to let the GUIs communicate with the class layer
+    /// </summary>
     public class Administrator
     {
-        public List<Object> Vrijwilligers;
+        /// <summary>
+        /// A reference to the data class
+        /// </summary>
         private Data data = new Data();
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Administrator"/> class.
+        /// </summary>
         public Administrator()
         {
-            Vrijwilligers = new List<Object>();
+            this.Vrijwilligers = new List<object>();
 
             this.UpdateGebruikers();
         }
 
+        /// <summary>
+        /// Gets a list of user objects
+        /// </summary>
+        public List<object> Vrijwilligers { get; private set; }
+
+        /// <summary>
+        /// Update the list of user objects
+        /// </summary>
         public void UpdateGebruikers()
         {
-            List<Gebruiker> list = data.HaalGebruikersOp();
+            List<Gebruiker> list = this.data.HaalGebruikersOp();
 
             this.Vrijwilligers.Clear();
 
             if (list != null)
+            {
                 foreach (Gebruiker g in list)
-                    Vrijwilligers.Add(g);
+                {
+                    this.Vrijwilligers.Add(g);
+                }
+            }
         }
 
+        /// <summary>
+        /// Set the IsOnline property of the user to true
+        /// </summary>
+        /// <param name="gebrID">The ID of the user</param>
+        /// <returns>Returns whether or not the operation has succeeded</returns>
         public bool SetOnline(int gebrID)
         {
             return this.data.UpdateOnlineStatus(true, gebrID);
         }
 
+        /// <summary>
+        /// Set the IsOnline property of the user to false
+        /// </summary>
+        /// <param name="gebrID">The ID of the user</param>
+        /// <returns>Returns whether or not the operation has succeeded</returns>
         public bool SetOffline(int gebrID)
         {
             return this.data.UpdateOnlineStatus(false, gebrID);
         }
 
+        /// <summary>
+        /// Send a new message
+        /// </summary>
+        /// <param name="message">The actual message</param>
+        /// <param name="gebrID">The ID of the owner of the message</param>
+        /// <param name="roomID">The room number the message has to be send to</param>
         public void SendMessage(string message, int gebrID, int roomID)
         {
             this.data.SendMessage(message, gebrID, roomID);
         }
 
+        /// <summary>
+        /// Get a list of messages of the given room
+        /// </summary>
+        /// <param name="chatroomID">The room number where to retrieve the messages from</param>
+        /// <returns>Returns a list of messages</returns>
         public List<string> ReturnMessages(int chatroomID)
         {
             List<string> returned = new List<string>();
@@ -54,7 +101,6 @@ namespace Administrator_Layer
 
             foreach (DataRow row in dt.Rows)
             {
-                //USERID, MESSAGEBODY, SENDDATE
                 int userID;
                 string message;
                 string senddate;
@@ -68,38 +114,56 @@ namespace Administrator_Layer
 
                 string gebrNaam = gebr.Naam;
 
-                returned.Add(String.Format("{0}<{1}>: {2}", gebrNaam, senddate.Split(' ')[1], message));
+                returned.Add(string.Format("{0}<{1}>: {2}", gebrNaam, senddate.Split(' ')[1], message));
             }
 
             return returned;
         }
 
-        public Object HaalGebruikerOp(int userID)
+        /// <summary>
+        /// Get the object of a user given the ID
+        /// </summary>
+        /// <param name="userID">The ID of the user</param>
+        /// <returns>Returns a user object who belongs to the given ID</returns>
+        public object HaalGebruikerOp(int userID)
         {
             return this.data.HaalGebruikerOp(userID);
         }
 
-        public List<int> ReturnUserChatrooms(int userID)
-        {
-            // return this.data.
-            return this.data.ReturnUserChatrooms(userID);
-        }
-
+        /// <summary>
+        /// Get a list of chat rooms the given user is currently connected to
+        /// </summary>
+        /// <param name="userID">The ID of the user</param>
+        /// <returns>Returns a list of room numbers</returns>
         public List<int> GetUserChatrooms(int userID)
         {
             return this.data.GetUserChatrooms(userID);
         }
 
+        /// <summary>
+        /// Create a new room
+        /// </summary>
+        /// <param name="roomID">Return the roomID of the inserted room</param>
         public void CreateRoom(out int roomID)
         {
             this.data.CreateRoom(out roomID);
         }
 
+        /// <summary>
+        /// Add a user to the given chat room
+        /// </summary>
+        /// <param name="userID">The ID of the new user</param>
+        /// <param name="roomID">The ID of the chat room</param>
         public void AddUserToChatroom(int userID, int roomID)
         {
             this.data.AddUserToChatroom(userID, roomID);
         }
 
+        /// <summary>
+        /// Get all users currently connected to the chat room
+        /// </summary>
+        /// <param name="roomID">The ID of the chat room</param>
+        /// <returns>Returns a list of user IDs</returns>
         public List<int> GetUsersFromChatroom(int roomID)
         {
             List<int> returned = new List<int>();
@@ -114,9 +178,14 @@ namespace Administrator_Layer
             return returned;
         }
 
-        public void DeleteUserFromRoom(int userID, int RoomID)
+        /// <summary>
+        /// Delete a user from the current chat room
+        /// </summary>
+        /// <param name="userID">The ID of the user</param>
+        /// <param name="roomID">The ID of the chat room</param>
+        public void DeleteUserFromRoom(int userID, int roomID)
         {
-            this.data.DeleteUserFromRoom(userID, RoomID);
+            this.data.DeleteUserFromRoom(userID, roomID);
         }
     }
 }
