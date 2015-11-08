@@ -34,7 +34,7 @@ namespace Proftaak_Chat_DB
             this.admin = new Administrator();
 
             this.gebrID = gebruikerID;
-            this.admin.SetOnline(gebrID); // <-- nieuwe regel
+            this.admin.SetOnline(gebrID);
 
             this.lbContacts.DrawMode = DrawMode.OwnerDrawFixed;
             this.lbContacts.DrawItem += new DrawItemEventHandler(this.listBox_DrawItem);
