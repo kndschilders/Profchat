@@ -22,7 +22,8 @@ namespace Database_Layer
         /// <summary>
         /// The connection string of the chat server
         /// </summary>
-        private static string connectionstring = "User Id=proftaak;Password=proftaak;Data Source=localhost:1521/XE;";
+        //private static string connectionstring = "User Id=proftaak;Password=proftaak;Data Source=localhost:1521/XE;";
+        private static string connectionstring = "User Id=test;Password=test;Data Source= //172.20.27.2:1521/XE;";
 
         /// <summary>
         /// The connection string of the main database, used to retrieve the user on initialization

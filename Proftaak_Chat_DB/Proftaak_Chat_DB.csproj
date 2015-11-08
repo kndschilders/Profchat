@@ -57,12 +57,6 @@
     <Compile Include="HoofdForm.Designer.cs">
       <DependentUpon>HoofdForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Inloggen.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Inloggen.Designer.cs">
-      <DependentUpon>Inloggen.cs</DependentUpon>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Chat.resx">
@@ -70,9 +64,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="HoofdForm.resx">
       <DependentUpon>HoofdForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Inloggen.resx">
-      <DependentUpon>Inloggen.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

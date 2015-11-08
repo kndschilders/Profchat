@@ -31,10 +31,11 @@ namespace Proftaak_Chat_DB
         public HoofdForm(int gebruikerID)
         {
             this.InitializeComponent();
+            this.admin = new Administrator();
 
             this.gebrID = gebruikerID;
+            this.admin.SetOnline(gebrID); // <-- nieuwe regel
 
-            this.admin = new Administrator();
             this.lbContacts.DrawMode = DrawMode.OwnerDrawFixed;
             this.lbContacts.DrawItem += new DrawItemEventHandler(this.listBox_DrawItem);
 

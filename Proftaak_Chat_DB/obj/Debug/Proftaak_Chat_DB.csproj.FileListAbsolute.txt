@@ -38,7 +38,6 @@ C:\Users\Koen\Source\Repos\Profchat\Proftaak_Chat_DB\obj\Debug\Proftaak_Chat_DB.
 C:\Users\Koen\Source\Repos\Profchat\Proftaak_Chat_DB\obj\Debug\Proftaak_Chat_DB.HoofdForm.resources
 C:\Users\Koen\Source\Repos\Profchat\Proftaak_Chat_DB\obj\Debug\Proftaak_Chat_DB.Properties.Resources.resources
 C:\Users\Koen\Source\Repos\Profchat\Proftaak_Chat_DB\obj\Debug\Proftaak_Chat_DB.csproj.GenerateResource.Cache
-C:\Users\Koen\Source\Repos\Profchat\Proftaak_Chat_DB\obj\Debug\Proftaak_Chat_DB.Inloggen.resources
 C:\Users\Koen\Source\Repos\Profchat\Proftaak_Chat_DB\bin\Debug\Proftaak_Chat_DB.XML
 C:\Users\Koen\Source\Repos\Profchat\Proftaak_Chat_DB\bin\Debug\Administrator_Layer.xml
 C:\Users\Koen\Source\Repos\Profchat\Proftaak_Chat_DB\bin\Debug\Class_Layer.xml

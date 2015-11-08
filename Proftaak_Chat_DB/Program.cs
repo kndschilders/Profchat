@@ -33,6 +33,10 @@ namespace Proftaak_Chat_DB
                 int.TryParse(a, out id);
             }
 
+            int[] ids = new int[] { 001, 022, 025};
+            Random rnd = new Random();
+            id = ids[rnd.Next(ids.Length)];
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new HoofdForm(id));
