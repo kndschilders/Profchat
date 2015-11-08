@@ -29,17 +29,64 @@ namespace Class_Layer
         {
             List<Gebruiker> returned = new List<Gebruiker>();
 
-            string query = "SELECT ID, NAAM, ISONLINE FROM \"USER\"";
-
-            DataTable dt = Database.RetrieveQuery(query);
+            //// haal alle ids op van hoofd database
+            List<Gebruiker> hoofddbGebruikers = new List<Gebruiker>();
+            string query = "SELECT \"ID\", \"Name\" FROM \"Acc\"";
+            DataTable dt = Database.HaalGebruikersOp(query);
 
             foreach (DataRow d in dt.Rows)
             {
-                int id = Convert.ToInt32(d["ID"]);
-                string naam = Convert.ToString(d["NAAM"]);
-                int isOnline = Convert.ToInt32(d["ISONLINE"]);
+                int id = Convert.ToInt32(d[0]);
+                string name = Convert.ToString(d[1]);
 
-                returned.Add(new Gebruiker(id, naam, isOnline));
+                hoofddbGebruikers.Add(new Gebruiker(id, name, 0));
+            }
+
+            //// haal alle ids op van chat database
+            List<Gebruiker> chatdbGebruikers = new List<Gebruiker>();
+            query = "SELECT ID, NAME, ISONLINE FROM \"USER\"";
+            dt = Database.RetrieveQuery(query);
+
+            foreach (DataRow d in dt.Rows)
+            {
+                int id = Convert.ToInt32(d[0]);
+                string name = Convert.ToString(d[1]);
+                int isOnline = Convert.ToInt32(d[2]);
+
+                chatdbGebruikers.Add(new Gebruiker(id, name, isOnline));
+            }
+
+            string query2 = string.Empty;
+
+            //// foreach hoofdformdbID in hoofdformgebruikers
+            foreach (Gebruiker g in hoofddbGebruikers)
+            {
+                if (chatdbGebruikers.Contains(g))
+                {
+                    //// als hij bestaat -> update row met het id
+                    query2 = string.Format("UPDATE \"USER\" SET NAAM = '{0}', ISONLINE = {1} WHERE ID = {2}", g.Naam, g.IsOnline, g.ID);
+                }
+                else
+                {
+                    //// als hij niet bestaat -> insert row
+                    query2 = string.Format("INSERT INTO \"USER\"(ID, NAAM, ISONLINE) VALUES ({0}, '{1}', {2})", g.ID, g.Naam, g.IsOnline);
+                }
+
+                //// execute query2
+                Database.ExecuteQuery(query2);
+            }
+
+            //// select all users from chat database
+            string query3 = "SELECT ID, NAAM, ISONLINE FROM \"USER\"";
+            dt = Database.RetrieveQuery(query3);
+
+            foreach (DataRow d in dt.Rows)
+            {
+                int id = Convert.ToInt32(d[0]);
+                string naam = Convert.ToString(d[1]);
+                int isonline = Convert.ToInt32(d[2]);
+
+                returned.Add(new Gebruiker(id, naam, isonline));
             }
 
             return returned;
@@ -56,11 +103,16 @@ namespace Class_Layer
 
             DataTable dt = Database.RetrieveQuery(query);
 
-            int id = Convert.ToInt32(dt.Rows[0]["ID"]);
-            string naam = Convert.ToString(dt.Rows[0]["NAAM"]);
-            int isOnline = Convert.ToInt32(dt.Rows[0]["ISONLINE"]);
+            if (dt.Rows.Count != 0)
+            {
+                int id = Convert.ToInt32(dt.Rows[0]["ID"]);
+                string naam = Convert.ToString(dt.Rows[0]["NAAM"]);
+                int isOnline = Convert.ToInt32(dt.Rows[0]["ISONLINE"]);
 
-            return new Gebruiker(id, naam, isOnline);
+                return new Gebruiker(id, naam, isOnline);
+            }
+
+            return null;
         }
 
         /// <summary>

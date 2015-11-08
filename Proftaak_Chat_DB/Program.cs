@@ -20,12 +20,22 @@ namespace Proftaak_Chat_DB
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
+        /// <param name="args">The ID of the user</param>
         [STAThread]
-        public static void Main()
+        public static void Main(string[] args)
         {
+            string[] arguments = Environment.GetCommandLineArgs();
+
+            int id = 0;
+
+            foreach (string a in arguments)
+            {
+                int.TryParse(a, out id);
+            }
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Inloggen());
+            Application.Run(new HoofdForm(id));
         }
     }
 }

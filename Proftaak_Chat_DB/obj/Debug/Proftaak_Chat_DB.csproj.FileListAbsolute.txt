@@ -43,5 +43,3 @@ C:\Users\Koen\Source\Repos\Profchat\Proftaak_Chat_DB\bin\Debug\Proftaak_Chat_DB.
 C:\Users\Koen\Source\Repos\Profchat\Proftaak_Chat_DB\bin\Debug\Administrator_Layer.xml
 C:\Users\Koen\Source\Repos\Profchat\Proftaak_Chat_DB\bin\Debug\Class_Layer.xml
 C:\Users\Koen\Source\Repos\Profchat\Proftaak_Chat_DB\bin\Debug\Database_Layer.xml
-C:\Users\Koen\Source\Repos\Profchat\Proftaak_Chat_DB\bin\Debug\Proftaak_Chat_DB.exe.CodeAnalysisLog.xml
-C:\Users\Koen\Source\Repos\Profchat\Proftaak_Chat_DB\bin\Debug\Proftaak_Chat_DB.exe.lastcodeanalysissucceeded

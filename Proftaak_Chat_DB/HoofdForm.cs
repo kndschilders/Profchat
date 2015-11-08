@@ -27,13 +27,11 @@ namespace Proftaak_Chat_DB
         /// <summary>
         /// Initializes a new instance of the <see cref="HoofdForm"/> class
         /// </summary>
-        /// <param name="previous">The previous form</param>
         /// <param name="gebruikerID">The ID of the user</param>
-        public HoofdForm(Form previous, int gebruikerID)
+        public HoofdForm(int gebruikerID)
         {
             this.InitializeComponent();
 
-            this.p = previous;
             this.gebrID = gebruikerID;
 
             this.admin = new Administrator();
@@ -73,11 +71,6 @@ namespace Proftaak_Chat_DB
         /// Gets or sets a reference of the <see cref="Administration"/> class
         /// </summary>
         private Administrator admin { get; set; }
-
-        /// <summary>
-        /// Gets or sets a reference of the previous form
-        /// </summary>
-        private Form p { get; set; }
 
         /// <summary>
         /// Gets or sets a reference of the user ID
@@ -207,7 +200,6 @@ namespace Proftaak_Chat_DB
         private void HoofdForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             this.admin.SetOffline(this.gebrID);
-            this.p.Close();
         }
 
         /// <summary>

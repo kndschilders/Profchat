@@ -34,7 +34,7 @@ namespace Database_Layer
         /// </summary>
         /// <param name="query">The input query</param>
         /// <returns>A DataTable containing the results of the query</returns>
-        public static DataTable HaalGebruikerOp(string query)
+        public static DataTable HaalGebruikersOp(string query)
         {
             using (OracleConnection conn = new OracleConnection(connectionstring2))
             {

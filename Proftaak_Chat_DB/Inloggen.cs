@@ -60,7 +60,7 @@ namespace Proftaak_Chat_DB
             this.Admin.SetOnline(gebrID);
             this.Admin.UpdateGebruikers();
 
-            HoofdForm form = new HoofdForm(this, gebrID);
+            HoofdForm form = new HoofdForm(gebrID);
             form.Show();
             this.Hide();
         }
