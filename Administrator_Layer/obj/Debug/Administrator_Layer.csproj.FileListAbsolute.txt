@@ -18,3 +18,6 @@ C:\Users\Koen\Source\Repos\Profchat\Administrator_Layer\bin\Debug\Database_Layer
 C:\Users\Koen\Source\Repos\Profchat\Administrator_Layer\obj\Debug\Administrator_Layer.csprojResolveAssemblyReference.cache
 C:\Users\Koen\Source\Repos\Profchat\Administrator_Layer\obj\Debug\Administrator_Layer.dll
 C:\Users\Koen\Source\Repos\Profchat\Administrator_Layer\obj\Debug\Administrator_Layer.pdb
+C:\Users\Koen\Source\Repos\Profchat\Administrator_Layer\bin\Debug\Administrator_Layer.XML
+C:\Users\Koen\Source\Repos\Profchat\Administrator_Layer\bin\Debug\Class_Layer.xml
+C:\Users\Koen\Source\Repos\Profchat\Administrator_Layer\bin\Debug\Database_Layer.xml
